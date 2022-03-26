@@ -9,43 +9,37 @@ pipeline {
   stages {  
     stage('Checkout') {
       steps {
-        checkout scm
+        checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/vaibhavkumar779/FinalDevOpsKUP.git']]])
       }
     }
     stage('Setup') { 
       steps {
-        script {
+        git branch: 'main', url: 'https://github.com/vaibhavkumar779/FinalDevOpsKUP'
           sh """
           pip3 install -r requirements.txt
           """
-        }
+        
       }
     }
     stage('Linting') { 
       steps {
-        script {
           sh """
           pylint **/*.py
           """
-        }
       }
     }
     stage('Unit Testing') {
       steps {
-        script {
           sh """
           python3 -m unittest discover -s tests/unit
           """
-        }
       }
     }
     stage('Integration Testing') { 
       steps {
-        script {
           sh """
           python3 -m unittest discover -s tests/integration
         """
-      }
     }
   }
 }  
