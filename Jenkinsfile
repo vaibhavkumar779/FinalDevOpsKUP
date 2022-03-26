@@ -15,6 +15,8 @@ pipeline {
       steps {
         git branch: 'main', url: 'https://github.com/vaibhavkumar779/FinalDevOpsKUP'
           sh """
+          python3 -m venv env \n
+          source env/bin/activate \n
           pip3 install -r requirements.txt
           """
         
