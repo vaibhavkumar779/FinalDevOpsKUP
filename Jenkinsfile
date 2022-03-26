@@ -16,7 +16,7 @@ pipeline {
       steps {
         script {
           sh """
-          pip install -r requirements.txt
+          pip3 install -r requirements.txt
           """
         }
       }
@@ -34,7 +34,7 @@ pipeline {
       steps {
         script {
           sh """
-          python -m unittest discover -s tests/unit
+          python3 -m unittest discover -s tests/unit
           """
         }
       }
@@ -43,7 +43,7 @@ pipeline {
       steps {
         script {
           sh """
-          python -m unittest discover -s tests/integration
+          python3 -m unittest discover -s tests/integration
         """
       }
     }
