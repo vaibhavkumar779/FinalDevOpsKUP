@@ -20,13 +20,7 @@ pipeline {
         
       }
     }
-    stage('Linting') { 
-      steps {
-          sh """
-          pylint **/*.py
-          """
-      }
-    }
+ 
     stage('Unit Testing') {
       steps {
           sh """
