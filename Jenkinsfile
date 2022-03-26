@@ -15,8 +15,6 @@ pipeline {
       steps {
         git branch: 'main', url: 'https://github.com/vaibhavkumar779/FinalDevOpsKUP'
           sh """
-          apt install pylint -y \n
-          apt install python3-testresources  -y \n
           pip3 install -r requirements.txt
           """
         
