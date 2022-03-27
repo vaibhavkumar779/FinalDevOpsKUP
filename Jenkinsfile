@@ -13,20 +13,10 @@ pipeline {
     }
     stage('Setup') { 
       steps {
-          sh """
-          pip3 install -r requirements.txt
-          """
-        
+          sh " pip3 install -r requirements.txt "
       }
     }
-    stage('build image')
-        {
-         
-            steps{
-                // sh 'echo $dockerhub_USR | xargs echo'
-                sh 'sudo docker build -t capstone:${GIT_COMMIT} .'
-            }
-        }
+    
     stage('Linting') { 
       steps {
         script {
@@ -45,7 +35,16 @@ pipeline {
       }
     }
 
-      
-    
+    stage('Build and Run') {
+      steps {
+        sh " gunicorn -d wsgi:app "
+      }
+    }
+    stage('build docker image'){
+         
+      steps{
+        sh 'docker build -t capstone:${GIT_COMMIT} .'
+      }
+    }    
   }
 }  
