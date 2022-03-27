@@ -19,7 +19,14 @@ pipeline {
         
       }
     }
-
+    stage('build image')
+        {
+         
+            steps{
+                // sh 'echo $dockerhub_USR | xargs echo'
+                sh 'sudo docker build -t capstone:${GIT_COMMIT} . -S=knoldus'
+            }
+        }
     stage('Linting') { 
       steps {
         script {
@@ -38,14 +45,7 @@ pipeline {
       }
     }
 
-     stage('build image')
-        {
-         
-            steps{
-                // sh 'echo $dockerhub_USR | xargs echo'
-                sh 'sudo docker build -t capstone:${GIT_COMMIT} . -S knoldus'
-            }
-        } 
+      
     
   }
 }  
