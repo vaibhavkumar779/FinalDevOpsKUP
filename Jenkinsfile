@@ -37,7 +37,7 @@ pipeline {
 
     stage('Build Archive') {
       steps {
-        sh """python3 pip install --upgrade build \n
+        sh """python3 -m pip install --upgrade build \n
         python3 -m build"""
       }
     }
