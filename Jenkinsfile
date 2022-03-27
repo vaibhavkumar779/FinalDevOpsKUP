@@ -43,7 +43,7 @@ pipeline {
 
     stage('Build and Run') {
       steps {
-        sh """ python3 -m nohup gunicorn  wsgi:app """
+        sh """ nohup python3 -m gunicorn  wsgi:app """
       }
     }
     stage('build docker image'){
