@@ -13,7 +13,6 @@ pipeline {
     }
     stage('Setup') { 
       steps {
-        git branch: 'main', url: 'https://github.com/vaibhavkumar779/FinalDevOpsKUP'
           sh """
           pip3 install -r requirements.txt
           """
