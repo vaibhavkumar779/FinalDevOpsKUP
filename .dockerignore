@@ -8,3 +8,4 @@ __pycache__/
 tests/__pycache__/
 app.egg-info/
 app/__pycache__/*
+.git 

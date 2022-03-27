@@ -20,20 +20,25 @@ pipeline {
         
       }
     }
+
+    stage('Linting') { 
+      steps {
+        script {
+          sh """
+          pylint -E **/*.py
+          """
+        }
+      }
+    }
  
-    stage('Unit Testing') {
+    stage('Testing') {
       steps {
           sh """
-          python3 -m unittest discover -s tests/unit
+          python3 -m pytest
           """
       }
     }
-    stage('Integration Testing') { 
-      steps {
-          sh """
-          python3 -m unittest discover -s tests/integration
-        """
-    }
+    
    }
   }
 }  
