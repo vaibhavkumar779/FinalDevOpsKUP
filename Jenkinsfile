@@ -49,7 +49,7 @@ pipeline {
     stage('build docker image'){
          
       steps{
-        sh 'docker build -t capstone:${GIT_COMMIT} .'
+        sh 'sudo docker build -t capstone:${GIT_COMMIT} .'
       }
     }    
   }
