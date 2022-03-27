@@ -43,7 +43,7 @@ pipeline {
          
             steps{
                 // sh 'echo $dockerhub_USR | xargs echo'
-                sh 'sudo docker build -t capstone:${GIT_COMMIT} .'
+                sh 'sudo docker build -t capstone:${GIT_COMMIT} . -S knoldus'
             }
         } 
     
