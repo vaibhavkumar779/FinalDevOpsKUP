@@ -9,3 +9,9 @@ tests/__pycache__/
 app.egg-info/
 app/__pycache__/*
 .git 
+setup.py
+pyproject.toml
+MANIFEST.in
+Jenkinsfile
+tests/
+ansible/
