@@ -13,8 +13,9 @@ pluggy==0.13.1
 py==1.11.0
 pyparsing==2.4.5
 pytest==5.3.1
+pylint>=2.13.0
+setuptools
 six==1.13.0
 wcwidth==0.1.7
 Werkzeug==0.16.0
 zipp==0.6.0
-pylint>=2.13.0

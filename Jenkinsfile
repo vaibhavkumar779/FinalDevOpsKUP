@@ -35,6 +35,12 @@ pipeline {
       }
     }
 
+    stage('Build Archive') {
+      steps {
+        sh "python3 -m build"
+      }
+    }
+
     stage('Build and Run') {
       steps {
         sh " gunicorn -d wsgi:app "
