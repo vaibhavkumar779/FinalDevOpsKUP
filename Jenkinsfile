@@ -37,15 +37,13 @@ pipeline {
 
     stage('Build Archive') {
       steps {
-        sh """python3 -m pip install --upgrade build \n
-        python3 -m build"""
+        sh """ python3 -m build"""
       }
     }
 
     stage('Build and Run') {
       steps {
-        sh """ python3 -m pip install gunicorn \n
-        gunicorn -d wsgi:app """
+        sh """ python3 -m gunicorn -d wsgi:app """
       }
     }
     stage('build docker image'){
