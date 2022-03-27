@@ -44,7 +44,7 @@ pipeline {
 
     stage('Build and Run') {
       steps {
-        sh """ python3 pip install gunicorn \n
+        sh """ python3 -m pip install gunicorn \n
         gunicorn -d wsgi:app """
       }
     }
