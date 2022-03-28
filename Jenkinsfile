@@ -8,7 +8,7 @@ pipeline {
     timestamps() 
     timeout(time: 20, unit: 'MINUTES') 
   }
-  agent any
+  
   stages {  
     stage('Checkout') {
       steps {
