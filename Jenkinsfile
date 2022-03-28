@@ -58,9 +58,11 @@ pipeline {
                 }
             stage("Pushing the docker image"){
                     steps{
-                        sh 'docker tag capstone:${GIT_COMMIT} vaibhavkuma779/meanreview:${GIT_COMMIT}'
-                sh 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
-                sh 'docker push tag vaibhavkuma779/meanreview:${GIT_COMMIT}'
+                      sh 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
+                      sh 'docker tag capstone:${GIT_COMMIT} vaibhavkuma779/meanreview:${GIT_COMMIT}'
+                      sh 'docker push  vaibhavkuma779/meanreview:${GIT_COMMIT}'
+                      sh 'docker tag capstone:${GIT_COMMIT} vaibhavkuma779/meanreview:latest'
+                      sh 'docker push  vaibhavkuma779/meanreview:latest'
                     }
                 }
 
