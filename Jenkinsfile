@@ -1,9 +1,9 @@
 pipeline {
   environment {
     environment{
-        dockerhub_repo = "vaibhavkuma779/mean_review"
+        dockerhubrepo="vaibhavkuma779/mean_review"
         dockerhub=credentials('dockerhub')//dockerhub_creds = 'dockerhub'
-        dockerImage = ''
+        dockerImage=''
     }
   }
   options {
