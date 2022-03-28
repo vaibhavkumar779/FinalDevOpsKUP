@@ -60,7 +60,7 @@ pipeline {
                     steps{
                         sh 'docker tag capstone:${GIT_COMMIT} vaibhavkuma779/meanreview:${GIT_COMMIT}'
                 sh 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
-                sh 'docker push vaibhavkuma779/meanreview:${GIT_COMMIT}'
+                sh 'docker push tag vaibhavkuma779/meanreview:${GIT_COMMIT}'
                     }
                 }
 
