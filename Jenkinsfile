@@ -1,5 +1,6 @@
 pipeline {
   environment {
+        dockerhub_repo = 'vaibhavkuma779/meanreview'
         dockerhub_creds = 'dockerhub'
         dockerImage=''
     
@@ -51,29 +52,28 @@ pipeline {
     //    sh """ nohup python3 -m gunicorn  wsgi:app """
     //  }
     //}
-    stage('build docker image'){
-         
-      steps{
-        sh 'docker build -t vaibhavkuma779:${GIT_COMMIT} .'
-      }
-    }
-
-    stage("Pushing the docker image"){
+     stage("building docker image"){
+                    steps{
+                        script{
+                            dockerImage = docker.build dockerhub_repo + ":$GIT_COMMIT"
+                        }
+                       
+                     }    
+                }
+            stage("Pushing the docker image"){
                     steps{
                         script {
                             docker.withRegistry('', dockerhub_creds){
                                 dockerImage.push()
                                 dockerImage.push('latest')
                                 dockerImage.push('$BUILD_NUMBER')
-                            
                             }
                         }
                     }
                 }
     stage('Remove Unused docker image') {
              steps{
-                    sh "docker rmi $imagename:$BUILD_NUMBER"
-                    sh "docker rmi $imagename:latest"
+                    sh "docker rmi $(docker images -q)"
                     }
               }
   }
