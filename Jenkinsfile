@@ -1,10 +1,9 @@
 pipeline {
   environment {
-    environment{
         dockerhubrepo="vaibhavkuma779/mean_review"
-        dockerhub=credentials('dockerhub')//dockerhub_creds = 'dockerhub'
+        dockerhub_creds = 'dockerhub'
         dockerImage=''
-    }
+    
   }
   options {
     buildDiscarder(logRotator(numToKeepStr: '5', daysToKeepStr: '5'))
@@ -56,23 +55,27 @@ pipeline {
     stage('build docker image'){
          
       steps{
-        sh 'docker build -t capstone:${GIT_COMMIT} .'
+        sh 'docker build -t dockerhub_repo:${GIT_COMMIT} .'
       }
     }
 
     stage("Pushing the docker image"){
-                    steps{
+                    steps{$BUILD_NUMBER
                         script {
-                           // docker.withRegistry('', dockerhub_creds){
-                           //     dockerImage.push()
-                           //     dockerImage.push('latest')
-                           //     dockerImage.push('v1')
-                              sh 'docker tag capstone:${GIT_COMMIT} dockerhub_repo:${GIT_COMMIT}'
-                sh 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
-                sh 'docker push dockerhub_repo:${GIT_COMMIT}'
-                           // }
+                            docker.withRegistry('', dockerhub_creds){
+                                dockerImage.push()
+                                dockerImage.push('latest')
+                                dockerImage.push('$BUILD_NUMBER')
+                            
+                            }
                         }
                     }
-                }    
+                }
+    stage('Remove Unused docker image') {
+             steps{
+                    sh "docker rmi $imagename:$BUILD_NUMBER"
+                    sh "docker rmi $imagename:latest"
+                    }
+              }
   }
 }  
