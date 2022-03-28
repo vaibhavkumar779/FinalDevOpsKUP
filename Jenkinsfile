@@ -47,11 +47,11 @@ pipeline {
       }
     }
 
-    stage('Build and Run') {
-      steps {
-        sh """ nohup python3 -m gunicorn  wsgi:app """
-      }
-    }
+    //stage('Build and Run') {
+    //  steps {
+    //    sh """ nohup python3 -m gunicorn  wsgi:app """
+    //  }
+    //}
     stage('build docker image'){
          
       steps{
