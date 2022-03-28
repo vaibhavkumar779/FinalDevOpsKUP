@@ -1,10 +1,8 @@
 pipeline {
-  environment {
-        dockerhub_repo = 'vaibhavkuma779/meanreview'
-        dockerhub_creds = 'dockerhub'
-        dockerImage=''
-    
-  }
+  agent any
+   environment {
+      dockerhub=credentials('dockerhub')
+   }
   options {
     buildDiscarder(logRotator(numToKeepStr: '5', daysToKeepStr: '5'))
     timestamps() 
@@ -54,21 +52,15 @@ pipeline {
     //}
      stage("building docker image"){
                     steps{
-                        script{
-                            dockerImage = docker.build dockerhub_repo + ":$GIT_COMMIT"
-                        }
+                      sh 'docker build -t capstone:${GIT_COMMIT} .'
                        
                      }    
                 }
             stage("Pushing the docker image"){
                     steps{
-                        script {
-                            docker.withRegistry('', dockerhub_creds){
-                                dockerImage.push()
-                                dockerImage.push('latest')
-                                dockerImage.push('$BUILD_NUMBER')
-                            }
-                        }
+                        sh 'docker tag capstone:${GIT_COMMIT} vaibhavkuma779/meanreview:${GIT_COMMIT}'
+                sh 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
+                sh 'docker push vaibhavkuma779/meanreview:${GIT_COMMIT}'
                     }
                 }
 
