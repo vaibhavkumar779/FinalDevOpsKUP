@@ -60,7 +60,7 @@ pipeline {
     }
 
     stage("Pushing the docker image"){
-                    steps{$BUILD_NUMBER
+                    steps{
                         script {
                             docker.withRegistry('', dockerhub_creds){
                                 dockerImage.push()
