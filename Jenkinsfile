@@ -1,6 +1,5 @@
 pipeline {
   environment {
-        dockerhubrepo="vaibhavkuma779/mean_review"
         dockerhub_creds = 'dockerhub'
         dockerImage=''
     
@@ -55,7 +54,7 @@ pipeline {
     stage('build docker image'){
          
       steps{
-        sh 'docker build -t dockerhub_repo:${GIT_COMMIT} .'
+        sh 'docker build -t vaibhavkuma779:${GIT_COMMIT} .'
       }
     }
 
