@@ -10,6 +10,16 @@ pipeline {
   }
   
   stages {  
+
+     stage('Cleanup Workspace') {
+            steps {
+                cleanWs()
+                sh """
+                echo "Cleaned Up Workspace For Project"
+                """
+            }
+        }
+
     stage('Checkout') {
       steps {
         checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/vaibhavkumar779/FinalDevOpsKUP.git']]])
@@ -50,6 +60,7 @@ pipeline {
     //    sh """ nohup python3 -m gunicorn  wsgi:app """
     //  }
     //}
+    
      stage("building docker image"){
                     steps{
                       sh 'docker build -t capstone:${GIT_COMMIT} .'
@@ -66,5 +77,5 @@ pipeline {
                     }
                 }
 
-  }
+  }  
 }  
