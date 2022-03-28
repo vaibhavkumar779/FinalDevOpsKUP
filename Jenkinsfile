@@ -1,13 +1,14 @@
 pipeline {
+  agent any
   options {
     buildDiscarder(logRotator(numToKeepStr: '5', daysToKeepStr: '5'))
     timestamps() 
     timeout(time: 20, unit: 'MINUTES') 
   }
-  agent any
-  stages { 
+  
+  stages {  
 
-    stage('Cleanup Workspace') {
+     stage('Cleanup Workspace') {
             steps {
                 cleanWs()
                 sh """
@@ -15,10 +16,10 @@ pipeline {
                 """
             }
         }
-         
+
     stage('Checkout') {
       steps {
-        checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/vaibhavkumar779/FinalDevOpsKUP.git']]])
+        checkout([$class: 'GitSCM', branches: [[name: '*/feature']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/vaibhavkumar779/FinalDevOpsKUP.git']]])
       }
     }
     stage('Setup') { 
@@ -45,22 +46,6 @@ pipeline {
       }
     }
 
-    stage('Build Archive') {
-      steps {
-        sh """ python3 -m build"""
-      }
-    }
-
-    stage('Build and Run') {
-      steps {
-        sh """ nohup python3 -m gunicorn wsgi:app """
-      }
-    }
-    stage('build docker image'){
-         
-      steps{
-        sh 'docker build -t capstone:${GIT_COMMIT} .'
-      }
-    }    
-  }
+   
+  }  
 }  
