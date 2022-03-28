@@ -70,7 +70,7 @@ pipeline {
                               sh 'docker tag capstone:${GIT_COMMIT} dockerhub_repo:${GIT_COMMIT}'
                 sh 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
                 sh 'docker push dockerhub_repo:${GIT_COMMIT}'
-                            }
+                           // }
                         }
                     }
                 }    
