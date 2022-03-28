@@ -1,4 +1,11 @@
 pipeline {
+  environment {
+    environment{
+        dockerhub_repo = "vaibhavkuma779/mean_review"
+        dockerhub_creds = 'dockerhub'
+        dockerImage = ''
+    }
+  }
   options {
     buildDiscarder(logRotator(numToKeepStr: '5', daysToKeepStr: '5'))
     timestamps() 
@@ -43,7 +50,7 @@ pipeline {
 
     stage('Build and Run') {
       steps {
-        sh """nohup python3 -m gunicorn wsgi:app > log.txt 2>&1 &"""
+        sh """ nohup python3 -m gunicorn  wsgi:app """
       }
     }
     stage('build docker image'){
@@ -51,6 +58,18 @@ pipeline {
       steps{
         sh 'docker build -t capstone:${GIT_COMMIT} .'
       }
-    }    
+    }
+
+    stage("Pushing the docker image"){
+                    steps{
+                        script {
+                            docker.withRegistry('', dockerhub_creds){
+                                dockerImage.push()
+                                dockerImage.push('latest')
+                                dockerImage.push('v1')
+                            }
+                        }
+                    }
+                }    
   }
 }  
