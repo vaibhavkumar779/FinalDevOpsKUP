@@ -2,7 +2,7 @@ pipeline {
   environment {
     environment{
         dockerhub_repo = "vaibhavkuma779/mean_review"
-        dockerhub_creds = 'dockerhub'
+        dockerhub=credentials('dockerhub')//dockerhub_creds = 'dockerhub'
         dockerImage = ''
     }
   }
@@ -63,10 +63,13 @@ pipeline {
     stage("Pushing the docker image"){
                     steps{
                         script {
-                            docker.withRegistry('', dockerhub_creds){
-                                dockerImage.push()
-                                dockerImage.push('latest')
-                                dockerImage.push('v1')
+                           // docker.withRegistry('', dockerhub_creds){
+                           //     dockerImage.push()
+                           //     dockerImage.push('latest')
+                           //     dockerImage.push('v1')
+                              sh 'docker tag capstone:${GIT_COMMIT} dockerhub_repo:${GIT_COMMIT}'
+                sh 'echo $dockerhub_PSW | docker login -u $dockerhub_USR --password-stdin'
+                sh 'docker push dockerhub_repo:${GIT_COMMIT}'
                             }
                         }
                     }
